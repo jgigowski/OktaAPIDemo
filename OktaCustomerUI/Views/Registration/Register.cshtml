@@ -1,0 +1,66 @@
+﻿@model OktaAPIShared.Models.Customer
+
+@{
+    var action = "AddUser";
+    var desc = "Add User";
+    if (!ViewBag.IsNewUser) {
+        action = "UpdateUser";
+        desc = "Update User";
+    }
+}
+
+<div class="jumbotron">
+    <h2>@desc</h2>
+    <p>
+        &nbsp;
+    </p>
+    @using (Html.BeginForm(action, "Registration", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    {
+        @Html.AntiForgeryToken()
+        <hr/>
+        @Html.ValidationSummary("", new {@class = "text-danger"})
+        @Html.HiddenFor(m => m.Id, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Profile.FirstName, new {@class = "col-md-2 control-label"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Profile.FirstName, new {@class = "form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Profile.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Profile.LastName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Profile.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Profile.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Profile.Login, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Profile.Login, new { @class = "form-control" })
+            </div>
+        </div>
+        if (ViewBag.IsNewUser)
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Credentials.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Credentials.Password, new { @class = "form-control" })
+                </div>
+            </div>
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="@desc"/>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

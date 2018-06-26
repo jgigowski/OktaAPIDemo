@@ -1,0 +1,54 @@
+﻿@model IEnumerable<OktaAPIShared.Models.BaseCustomer>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<div class="jumbotron">
+    
+    @if (ViewBag.Message != null)
+    {
+        var displaytype = "alert alert-success";
+        if (ViewBag.IsError)
+        {
+            displaytype = "alert alert-danger";
+        }
+        <p class="@displaytype">@ViewBag.Message</p>
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <p>
+        &nbsp;
+    </p>
+    @if (Model.Any())
+    {
+        <table class="table table-condensed">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>&nbsp;</th>
+            </tr>
+            @foreach (var s in Model.Where(t => t.Profile != null))
+            {
+                <tr>
+                    <td>@s.Profile.FirstName</td>
+                    <td>@s.Profile.LastName</td>
+                    <td>@s.Profile.Email</td>
+                    <td>
+                        <a href="@Url.Action("EditUser", "Registration", new {Id= s.Id})" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        @if (!s.Profile.Email.Contains("okta"))
+                        {
+                            <a href="@Url.Action("DeleteUser", "Registration", new {Id= s.Id})" class="btn btn-warning">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    @Html.ActionLink("Add User", "Register", "Registration")
+</div>

@@ -1,0 +1,22 @@
+﻿@{
+var tokenresponse = OktaCustomerUI.Helpers.LoginHelper.GetOIDCIntrospectionDetails();
+
+    if (tokenresponse != null)
+    {
+        <div class="jumbotron" style="font-size: small">
+            <p class="text-success" style="font-weight: bold;">OpenID Connect Information</p>
+            <table class="table">
+                <tr>
+                    <th>User Name</th>
+                    <th>Status</th>
+                    <th>Issuer</th>
+                </tr>
+                <tr>
+                    <td>@tokenresponse.UserName</td>
+                    <td>@tokenresponse.Active</td>
+                    <td>@tokenresponse.ISS</td>
+                </tr>
+            </table>
+        </div>
+    }
+}

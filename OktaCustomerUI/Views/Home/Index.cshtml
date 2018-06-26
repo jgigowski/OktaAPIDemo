@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    @if (ViewBag.Message != null)
+    {
+        var displaytype = "alert alert-success";
+        if (ViewBag.IsError)
+        {
+            displaytype = "alert alert-danger";
+        }
+        <p class="@displaytype">@ViewBag.Message</p>
+    }
+    <h2>Leveraging Okta APIs</h2>
+    <p class="lead"></p>
+
+    <p class="lead">
+        <ul>
+            <li>Open Id Connect Login</li>
+            <li>Legacy Login</li>
+            <li>User Registration - CRUD</li>
+        </ul>
+    </p>
+   
+</div>
+
+<div class="row">
+
+</div>
