@@ -1,0 +1,59 @@
+﻿@model List<OktaAPIShared.Models.App>
+
+@{
+    ViewBag.Title = "User Applications";
+}
+
+
+<div class="jumbotron">
+
+    @if (ViewBag.Message != null)
+    {
+        var displaytype = "alert alert-success";
+        if (ViewBag.IsError)
+        {
+            displaytype = "alert alert-danger";
+        }
+        <p class="@displaytype">@ViewBag.Message</p>
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <p>
+        &nbsp;
+    </p>
+
+    <style>
+        div.appbox {
+            float: left;
+            background-color: ghostwhite;
+            width: 150px;
+            height: 90px;
+            border: 1px solid grey;
+            padding: 5px;
+            margin: 5px;
+            text-align: center;
+        }
+
+        div.wrapper {
+            width: 100%; /* useless */
+            overflow: hidden; /* establish a new formatting context */
+            min-height: 20px;
+        }
+    </style>
+
+    @if (Model.Any())
+    {
+        <div class="wrapper">
+            @foreach (var app in Model.ToList())
+            {
+                if (app._links != null && app._links.appLinks.Count() > 0)
+                {
+                <div class="appbox" style="cursor: pointer;" onclick="window.open('@app._links.appLinks.FirstOrDefault().href', '_blank');">
+                    <img src="@app._links.logo.FirstOrDefault().href"  />
+                    <p style="font-size: 12px">@app.label</p>
+                </div>
+                }
+            }
+        </div>
+    }
+</div>

@@ -16,6 +16,11 @@ namespace OktaAPI.Helpers
             request.ContentType = @"application/json";
             request.Accept = @"application/json";
 
+            if (url.Contains("https:"))
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            }
+
             if (!string.IsNullOrEmpty(oktaToken))
             {
                 request.Headers.Add("Authorization", "SSWS " + oktaToken);
@@ -51,6 +56,10 @@ namespace OktaAPI.Helpers
             request.Method = "POST";
             request.ContentType = @"application/json";
             request.Accept = @"application/json";
+
+            if (url.Contains("https:")) {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            }
 
             if (!string.IsNullOrEmpty(oktaToken))
             {
@@ -89,6 +98,9 @@ namespace OktaAPI.Helpers
             }
             catch (WebException ex)
             {
+                if (ex.Response == null) {
+                    return null;
+                }
                 using (var stream = ex.Response.GetResponseStream())
                 using (var reader = new StreamReader(stream))
                 {
@@ -97,18 +109,21 @@ namespace OktaAPI.Helpers
             }
             catch (Exception ex)
             {
-                return "Unhandled Error";
+                return null;
             }
-
-            return "";
         }
 
-        public static string Delete(string url, string oktaToken)
+        public static string Delete(string url, string oktaToken = null)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "DELETE";
             request.ContentType = @"application/json";
             request.Accept = @"application/json";
+
+            if (url.Contains("https:"))
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            }
 
             if (!string.IsNullOrEmpty(oktaToken))
             {

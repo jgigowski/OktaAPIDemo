@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
+using System.Collections.Generic;
 using System.Web.Configuration;
 using Newtonsoft.Json;
 using OktaAPIShared.Models;
@@ -93,12 +94,24 @@ namespace OktaAPI.Helpers
         public static TokenIntrospectionResponse IntrospectToken(string token)
         {
             var sJsonResponse = JsonHelper.Post($"https://{_apiUrlBase}/oauth2/{_oktaOAuthIssuerId}/v1/introspect?token={token}&token_type_hint=access_token", null, null, _oktaOAuthHeaderAuth);
+            if (string.IsNullOrEmpty(sJsonResponse))
+            {
+                return null;
+            }
             return JsonConvert.DeserializeObject<TokenIntrospectionResponse>(sJsonResponse);
         }
 
+        public static List<App> ListApps(string Id)
+        {
+            var sJsonResponse = JsonHelper.Get($"https://{_apiUrlBase}/api/v1/apps?filter=user.id+eq+\"{Id}\"", _oktaToken);
+            //var sJsonResponse = JsonHelper.Get($"https://{_apiUrlBase}/api/v1/apps?filter=user.id+eq+\"{Id}\"&expand=user/{Id}", _oktaToken);
+
+            return JsonConvert.DeserializeObject<List<App>>(sJsonResponse);
+        }
+        
         public static void RevokeToken(string token)
         {
-            JsonHelper.Post($"https://{_apiUrlBase}/oauth2/{_oktaOAuthIssuerId}/v1/revoke?token={token}&token_type_hint=access_token", null, null,_oktaOAuthHeaderAuth);
+            var response = JsonHelper.Post($"https://{_apiUrlBase}/oauth2/{_oktaOAuthIssuerId}/v1/revoke?token={token}&token_type_hint=access_token", null, null,_oktaOAuthHeaderAuth);
         }
 
         private static string Base64Encode(string plainText)

@@ -36,10 +36,13 @@
                     <td>@s.Profile.LastName</td>
                     <td>@s.Profile.Email</td>
                     <td>
+                        <a href="@Url.Action("ListApps", "Registration", new {Id= s.Id})" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </a>
                         <a href="@Url.Action("EditUser", "Registration", new {Id= s.Id})" class="btn btn-warning">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
-                        @if (!s.Profile.Email.Contains("okta"))
+                        @if (!s.Profile.Email.Contains("okta") && !s.Profile.Email.Contains("brawndo") && !s.Profile.Email.Contains("jgigowski@gmail"))
                         {
                             <a href="@Url.Action("DeleteUser", "Registration", new {Id= s.Id})" class="btn btn-warning">
                                 <span class="glyphicon glyphicon-trash"></span>

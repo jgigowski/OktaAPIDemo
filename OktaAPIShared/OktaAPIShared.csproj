@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Apps.cs" />
     <Compile Include="Models\Authentication.cs" />
     <Compile Include="Models\AuthenticationResponse.cs" />
     <Compile Include="Models\Customer.cs" />

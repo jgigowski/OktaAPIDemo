@@ -139,5 +139,23 @@ namespace OktaCustomerUI.Controllers
             
             return RedirectToAction("List");
         }
+
+        public ActionResult ListApps(string Id)
+        {
+            var response = APIHelper.ListApps(Id);
+
+            if (response == null)
+            {
+                TempData["Message"] = "Unhandled Error";
+                TempData["IsError"] = true;
+            }
+            else if (response.Count() < 1)
+            {
+                TempData["Message"] = "User has no applications assigned";
+                TempData["IsError"] = true;
+            }
+
+            return View("Apps", response);
+        }
     }
 }

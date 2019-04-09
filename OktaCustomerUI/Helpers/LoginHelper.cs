@@ -67,12 +67,12 @@ namespace OktaCustomerUI.Helpers
                 if (!string.IsNullOrEmpty(accesstoken))
                 {
                     oTIR = APIHelper.IntrospectToken(accesstoken);
-                }
-                
-                if (!oTIR.Active)
-                {
-                    oTIR = null;
-                    ExpireCookies();
+
+                    if (oTIR == null || !oTIR.Active)
+                    {
+                        oTIR = null;
+                        ExpireCookies();
+                    }
                 }
             }
 

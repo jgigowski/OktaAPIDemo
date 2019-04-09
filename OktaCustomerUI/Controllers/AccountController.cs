@@ -132,7 +132,7 @@ namespace OktaCustomerUI.Controllers
 
         [AllowAnonymous]
         //OIDC login and Widget both redirect here (leave off the HttpGet and the HttpPost)
-        public ActionResult AuthCode(string code, string state)//state caode from okta should match what I sent in
+        public ActionResult AuthCode(string code, string state)//state code from okta should match what I sent in
         {
             var tokenresponse = APIHelper.GetToken(code);
 
@@ -171,11 +171,13 @@ namespace OktaCustomerUI.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult OIDCLogoff()
+        public ActionResult OIDCLogOff()
         {
             Helpers.LoginHelper.OIDCLogout();
 
-            return RedirectToAction("Index", "Home");
+            ViewBag.OrgUrl = $"https://{WebConfigurationManager.AppSettings["okta:BaseUrl"]}/";
+
+            return View("LogOff");
         }
     }
 }

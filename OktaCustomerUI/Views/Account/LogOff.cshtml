@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    //<![CDATA[
+
+    var orgUrl = '@ViewBag.OrgUrl';
+
+    $(document).ready(function () {
+        $.ajax({
+            url: orgUrl + "/api/v1/sessions/me",
+            type: 'DELETE',
+            dataType: 'json',
+            xhrFields: { withCredentials: true },
+            crossDomain: true,
+            success: data => {
+                //alert("success - data: %s", JSON.stringify(data));
+            }
+        });
+
+        //dynamically redirect to default page
+        var sURI = window.location.href;
+        sURI = sURI.replace("/Account/OIDCLogOff", "");
+        sURI = sURI.replace("https", "http");
+
+        //alert(sURI);
+
+        location.href = sURI;//http://localhost/OktaCustomerUI
+    });
+//]]>
+</script>
