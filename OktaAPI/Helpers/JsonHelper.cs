@@ -109,6 +109,7 @@ namespace OktaAPI.Helpers
             }
             catch (Exception ex)
             {
+                //The request was aborted: Could not create SSL/TLS secure channel.
                 return null;
             }
         }

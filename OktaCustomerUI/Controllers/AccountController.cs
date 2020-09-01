@@ -136,7 +136,7 @@ namespace OktaCustomerUI.Controllers
         {
             var tokenresponse = APIHelper.GetToken(code);
 
-            if (string.IsNullOrEmpty(tokenresponse.AccessToken) || string.IsNullOrEmpty(tokenresponse.IDToken))
+            if (tokenresponse == null || string.IsNullOrEmpty(tokenresponse.AccessToken) || string.IsNullOrEmpty(tokenresponse.IDToken))
             {
                 try
                 {

@@ -75,6 +75,11 @@ namespace OktaAPI.Helpers
         public static OIDCTokenResponse GetToken(string oktaAuthCode)
         {
             var sJsonResponse = JsonHelper.Post($"https://{_apiUrlBase}/oauth2/{_oktaOAuthIssuerId}/v1/token?code={oktaAuthCode}&grant_type=authorization_code&redirect_uri={_oktaOAuthRedirectUri}", null, null, _oktaOAuthHeaderAuth);
+
+            if (string.IsNullOrEmpty(sJsonResponse)) {
+                return null; //TODO: add error handling
+            }
+
             return JsonConvert.DeserializeObject<OIDCTokenResponse>(sJsonResponse);
         }
         
